@@ -8,7 +8,7 @@
  async function ex4() {
    const query = qs.stringify(
    {
-       _
+       fields: ['price']
    }, 
    {
      encodeValuesOnly: true,
@@ -16,9 +16,14 @@
    console.log("The query string", query);
  
    // call the matching endpoint and include the querystring after the ?
-   const baseUrl = _;
-   const response = await fetch(`${_}?${query}`);
+   const baseUrl = 'http://localhost:1337/api/products';
+   const response = await fetch(`${baseUrl}?${query}`);
    const result = await response.json();
-   _
+   console.log(result.data.map((ele) => {
+     return ele.attributes.price;
+   })
+   .reduce((first, next) => {
+     return first + next;
+   }));
  }
  ex4();

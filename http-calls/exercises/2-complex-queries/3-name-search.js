@@ -4,10 +4,15 @@
  */
 
  import "./qs.js";
- async function searchProductByName(nameStr) {
+ async function searchProductByName(nameStr ='') {
    const query = qs.stringify(
    {
-       _
+       
+       filters: {
+         name: {
+           $contains: `${nameStr}`,
+         },
+       }
    }, 
    {
      encodeValuesOnly: true,
@@ -15,10 +20,11 @@
    console.log("The query string", query);
  
    // call the matching endpoint and include the querystring after the ?
-   const baseUrl = _;
-   const response = await fetch(`${_}?${query}`);
+   const baseUrl = 'http://localhost:1337/api/products';
+   const response = await fetch(`${baseUrl}?${query}`);
    const result = await response.json();
-   _
+   console.log(result);
+   return result;
  }
 
  async function test() {
